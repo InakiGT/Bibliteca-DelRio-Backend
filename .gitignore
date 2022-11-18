@@ -1,5 +1,6 @@
 # directories
 node_modules
+mysql_data
 
 # files
 .env
