@@ -25,7 +25,6 @@ router.get('/:id', async ( req, res ) => {
         const userService = new User();
         const id = req.params.id;
         const data = await userService.findOne(id);
-        console.log(data)
 
         res.json(data);
 
@@ -44,6 +43,40 @@ router.post('/', async (req, res) => {
         const newUser = await userService.create();
 
         res.json(newUser);
+
+    } catch(_) {
+        res
+            .status(500)
+            .json({ msg: 'Internal server error' });
+    }
+});
+
+router.patch('/:id', async ( req, res ) => {
+    try {
+
+        const userService = new User();
+        const id = req.params.id;
+        const changes = req.body;
+
+        const data = await userService.update( id, changes );
+
+        res.json(data);
+
+    } catch(_) {
+        res
+            .status(500)
+            .json({ msg: 'Internal server error' });
+    }
+});
+
+router.delete('/:id', async ( req, res ) => {
+    try {
+
+        const userService = new User();
+        const id = req.params.id;
+
+        const data = await userService.delete(id);
+        res.json(data);
 
     } catch(_) {
         res
