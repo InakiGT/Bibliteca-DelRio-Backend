@@ -4,16 +4,35 @@ const User = require('../services/users.services');
 const router = express.Router();
 
 
-router.get('/', ( _, res ) => {
+router.get('/', async ( _, res ) => {
     try {
 
         const userService = new User();
-        const data = userService.find();
-        res.json( data );
+        const data = await userService.find();
+        
+        res.json(data);
+
     } catch(_) {
         res
             .status(500)
             .json({ msg: "Internal server error" });
+    }
+});
+
+router.get('/:id', async ( req, res ) => {
+    try {
+
+        const userService = new User();
+        const id = req.params.id;
+        const data = await userService.findOne(id);
+        console.log(data)
+
+        res.json(data);
+
+    } catch(_) {
+        res
+            .status(500)
+            .json({ msg: 'Internal server error' });
     }
 });
 
@@ -24,13 +43,12 @@ router.post('/', async (req, res) => {
         const userService = new User(body.username, body.email, body.password);
         const newUser = await userService.create();
 
-
         res.json(newUser);
 
-    } catch( err ) {
+    } catch(_) {
         res
             .status(500)
-            .json({ msg: err });
+            .json({ msg: 'Internal server error' });
     }
 });
 

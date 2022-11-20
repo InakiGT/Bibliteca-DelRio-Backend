@@ -9,10 +9,28 @@ class User {
     }
 
     async find() {
+        try {
+            const data = await models.User.findAll();
 
+            return data;
+        } catch(err) {
+            console.log(err);
+        }
     }
     
-    findOne() {}
+    async findOne(id) {
+        try {
+            const user = await models.User.findByPk(id);
+
+            if(!user) {
+                throw new Error('User not found');
+            }
+
+            return user;
+        } catch(err) {
+            console.log(err);
+        }
+    }
     
     findByEmail() {}
     
