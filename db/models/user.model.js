@@ -27,6 +27,11 @@ const UserSchema = {
         type: DataTypes.DATE,
         field: 'created_at',
         defaultValue: Sequelize.NOW,
+    },
+    role: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        defaultValue: 'academico',
     }
 }
 
