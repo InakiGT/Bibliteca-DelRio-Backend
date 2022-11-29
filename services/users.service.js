@@ -66,7 +66,7 @@ class User {
         }
     }
 
-    async update(id, changes) {
+    async update( id, changes ) {
         try {
             const user = await this.findOne(id);
             const data = await user.update(changes);
@@ -83,7 +83,7 @@ class User {
             const user = await this.findOne(id);
             await user.destroy();
 
-            return { id };
+            return { id }
         } catch(err) {
             console.log(err);
         }

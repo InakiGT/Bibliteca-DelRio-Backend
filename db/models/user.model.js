@@ -32,7 +32,7 @@ const UserSchema = {
         allowNull: false,
         type: DataTypes.STRING,
         defaultValue: 'academico',
-    }
+    },
 }
 
 class User extends Model {
