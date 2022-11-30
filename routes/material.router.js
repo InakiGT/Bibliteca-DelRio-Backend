@@ -7,11 +7,13 @@ const { updateMaterialSchema, deleteMaterialSchema } = require('../schemas/mater
 
 const router = express.Router();
 
-router.get('/', async ( _, res, next ) => {
+router.get('/', async ( req, res, next ) => {
     try {
 
+        const query = req.query.name || null;
+
         const materialService = new Material();
-        const data = await materialService.find();
+        const data = await materialService.find(query);
         
         res.json(data);
 
@@ -24,7 +26,7 @@ router.get('/:id',
     passport.authenticate('jwt', { session: false }),
     async ( req, res, next ) => {
         try {
-
+            
             const id = req.params.id;
             const materialService = new Material();
             const data = await materialService.findOne(id);

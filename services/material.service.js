@@ -1,4 +1,5 @@
 const { models } = require('../libs/sequilize');
+const { QueryTypes } = require('sequelize');
 
 class Material {
     constructor( title, description, autor, languaje, contentUrl, backgroundImg, frontPage ) {
@@ -11,11 +12,24 @@ class Material {
         this.frontPage = frontPage;
     }
 
-    async find() {
+    async find(query) {
         try {
 
-            const data = await models.Material.findAll();
+            if(!query) {
+                const data = await models.Material.findAll();
+                return data;
+            }
+
+            const data = await models.Material.sequelize.query(
+                'SELECT * FROM material WHERE (INSTR(title, :search_name) > 0) OR (INSTR(autor, :search_name) > 0)',
+                {
+                    replacements: { search_name: query },
+                    type: QueryTypes.SELECT
+                }
+            );
+
             return data;
+
 
         } catch(err) {
             console.log(err);
