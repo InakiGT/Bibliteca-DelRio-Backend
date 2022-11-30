@@ -1,6 +1,6 @@
 const express = require('express');
 const Prestamo = require('../services/prestamos.service');
-const validatorHandler = require('../middlewares/validator.handler');
+const { validatorHandler } = require('../middlewares/validator.handler');
 const { getPrestamoSchema, deletePrestamoSchema } = require('../schemas/prestamo.schema');
 
 const router = express.Router();

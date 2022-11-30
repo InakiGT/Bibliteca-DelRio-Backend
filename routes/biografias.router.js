@@ -1,7 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const { Biografia } = require('../services/material.service');
-const validatorHandler = require('../middlewares/validator.handler');
+const { validatorHandler } = require('../middlewares/validator.handler');
 const { createBiografiaSchema } = require('../schemas/material.schema');
 const { checkAdminRole } = require('../middlewares/auth.handler');
 

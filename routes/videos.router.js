@@ -2,7 +2,7 @@ const express = require('express');
 const passport = require('passport');
 const { Video } = require('../services/material.service');
 const { checkAdminRole } = require('../middlewares/auth.handler');
-const validatorHandler = require('../middlewares/validator.handler');
+const { validatorHandler } = require('../middlewares/validator.handler');
 const { createVideoSchema } = require('../schemas/material.schema');
 
 const router = express.Router();

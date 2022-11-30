@@ -1,6 +1,6 @@
 const express = require('express');
 const Registro = require('../services/registros.service');
-const validatorHandler = require('../middlewares/validator.handler');
+const { validatorHandler } = require('../middlewares/validator.handler');
 const { createRegistroSchema } = require('../schemas/registro.schema');
 
 const router = express.Router();

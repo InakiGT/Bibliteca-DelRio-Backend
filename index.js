@@ -12,8 +12,8 @@ app.use('/new_page', ( _, res ) => {
 });
 
 routersApi(app);
-app.use(Errors.boomErrorHandler());
-app.use(Errors.errorHandler());
+app.use( Errors.boomErrorHandler() );
+app.use( Errors.errorHandler() );
 
 app.listen(config.port, () => {
     console.log(`Servidor escuchando en el puerto ${ config.port }`);

@@ -1,7 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const Gaceta = require('../services/gaceta.service');
-const validatorHandler = require('../middlewares/validator.handler');
+const { validatorHandler } = require('../middlewares/validator.handler');
 const { checkAdminRole } = require('../middlewares/auth.handler');
 const { createGacetaSchema, updateGacetaSchema, deleteGacetaSchema } = require('../schemas/gaceta.schema');
 

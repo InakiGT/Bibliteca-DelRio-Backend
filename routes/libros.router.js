@@ -1,7 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const { Libro } = require('../services/material.service');
-const validatorHandler = require('../middlewares/validator.handler');
+const { validatorHandler } = require('../middlewares/validator.handler');
 const { checkAdminRole } = require('../middlewares/auth.handler');
 const { createLibroSchema } = require('../schemas/material.schema');
 
