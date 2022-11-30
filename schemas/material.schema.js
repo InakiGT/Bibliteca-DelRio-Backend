@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const id = Joi.number().integer();
+const id = Joi.number().integer().required();
 const title = Joi.string();
 const description = Joi.string();
 const autor = Joi.string();
@@ -74,6 +74,10 @@ const createBiografiaSchema = Joi.object({
     frontPage: frontPage.required(),
 });
 
+const getMaterialSchema = Joi.object({
+    id,
+});
+
 const updateMaterialSchema = Joi.object({
     id,
 });
@@ -88,6 +92,7 @@ module.exports = {
     createVideoSchema,
     createRevistaSchema,
     createBiografiaSchema,
+    getMaterialSchema,
     updateMaterialSchema,
     deleteMaterialSchema,
 }

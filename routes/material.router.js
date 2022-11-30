@@ -3,7 +3,7 @@ const passport = require('passport');
 const { Material } = require('../services/material.service');
 const { checkAdminRole } = require('../middlewares/auth.handler');
 const { validatorHandler } = require('../middlewares/validator.handler');
-const { updateMaterialSchema, deleteMaterialSchema } = require('../schemas/material.schema');
+const { updateMaterialSchema, deleteMaterialSchema, getMaterialSchema } = require('../schemas/material.schema');
 
 const router = express.Router();
 
@@ -24,6 +24,7 @@ router.get('/', async ( req, res, next ) => {
 
 router.get('/:id', 
     passport.authenticate('jwt', { session: false }),
+    validatorHandler( getMaterialSchema, 'params' ),
     async ( req, res, next ) => {
         try {
             
