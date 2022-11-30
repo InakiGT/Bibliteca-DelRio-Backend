@@ -74,10 +74,20 @@ const createBiografiaSchema = Joi.object({
     frontPage: frontPage.required(),
 });
 
+const updateMaterialSchema = Joi.object({
+    id,
+});
+
+const deleteMaterialSchema = Joi.object({
+    id,
+});
+
 module.exports = {
     createLibroSchema,
     createTesisSchema,
     createVideoSchema,
     createRevistaSchema,
     createBiografiaSchema,
+    updateMaterialSchema,
+    deleteMaterialSchema,
 }

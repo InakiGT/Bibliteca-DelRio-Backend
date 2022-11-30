@@ -34,6 +34,34 @@ class Material {
     }
 
     async create() {}
+
+    async update( id, changes ) {
+        try {
+
+            const material = await this.findOne(id);
+            const data = await material.update(changes);
+
+            return data;
+
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    async delete(id) {
+        try {
+
+            const material = await this.findOne(id);
+            material.destroy();
+
+            return {
+                id
+            }
+
+        } catch(err) {
+            console.log(err);
+        }
+    }
 }
 
 class Video extends Material {

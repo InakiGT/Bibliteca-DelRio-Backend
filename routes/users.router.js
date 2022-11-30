@@ -2,7 +2,7 @@ const express = require('express');
 const User = require('../services/users.service');
 const validatorHandler = require('../middlewares/validator.handler');
 const { getUserSchema, createUserSchema, updateUserSchema, deleteUserSchema } = require('../schemas/user.schema');
-const { checkAdminRole } = require('../middlewares/auth.handler');
+const { checkAdminRole, checkPermission } = require('../middlewares/auth.handler');
 
 const router = express.Router();
 
@@ -56,7 +56,8 @@ router.post('/',
 });
 
 router.patch('/:id', 
-    validatorHandler( updateUserSchema, 'body' ),
+    checkPermission(),
+    validatorHandler( updateUserSchema, 'params' ),
     async ( req, res, next ) => {
         try {
 

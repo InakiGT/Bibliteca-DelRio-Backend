@@ -25,6 +25,18 @@ const checkAdminRole = () => {
     }
 }
 
+const checkPermission = () => {
+    return ( req, _, next ) => {
+        const user = req.user;
+        
+        if( user.sub === parseInt(req.params.id) || user.role === 'admin' ) {
+            next();
+        } else {
+            next(boom.unauthorized());
+        }
+    }
+}
+
 const checkRoles = (...roles) => {
     return ( req, _, next ) => {
         const user = req.user;
@@ -39,5 +51,6 @@ const checkRoles = (...roles) => {
 module.exports = {
     checkApiKey,
     checkAdminRole,
-    checkRoles
+    checkRoles,
+    checkPermission,
 }
