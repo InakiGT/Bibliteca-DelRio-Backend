@@ -1,7 +1,12 @@
+const uuid = require('uuid');
 const { models } = require('../libs/sequilize');
 
 class Prestamo {
-    constructor() {}
+    constructor( userId, materialId ) {
+        this.userId = userId;
+        this.materialId = materialId;
+        this.code = uuid.v1();
+    }
 
     async findOne(id) {
         try {
@@ -18,8 +23,14 @@ class Prestamo {
     async create() {
         try {
 
-            const newPrestamo = await models.Prestamo.create({});
-            return newPrestamo;
+            const newPrestamo = {
+                userId: this.userId,
+                materialId: this.materialId,
+                code: this.code,
+            }
+            
+            const data = await models.Prestamo.create(newPrestamo);
+            return data;
 
         } catch(err) {
             console.log(err);

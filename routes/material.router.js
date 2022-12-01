@@ -1,6 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const { Material } = require('../services/material.service');
+const Registro = require('../services/registros.service');
 const { checkAdminRole } = require('../middlewares/auth.handler');
 const { validatorHandler } = require('../middlewares/validator.handler');
 const { updateMaterialSchema, deleteMaterialSchema, getMaterialSchema } = require('../schemas/material.schema');
@@ -30,7 +31,9 @@ router.get('/:id',
             
             const id = req.params.id;
             const materialService = new Material();
+            const registroService = new Registro();
             const data = await materialService.findOne(id);
+            await registroService.updateByMaterial(id);
 
             res.json(data);
 

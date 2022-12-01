@@ -9,18 +9,19 @@ const userService = new User();
 class Auth {
     async getUser( email, password ) {
         const user = await userService.findByEmail(email);
-
+        
         if(!user) {
             throw boom.unauthorized();
         }
-
+        
         const isMatch = await bcrypt.compare( password, user.password );
-
+        
         if(!isMatch) {
             throw boom.unauthorized();
         }
-
+        
         delete user.dataValues.password;
+        
         return user;
     }
 
