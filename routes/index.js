@@ -11,12 +11,12 @@ const librosRouter = require('./libros.router');
 const revistasRouter = require('./revistas.router');
 const tesisRouter = require('./tesis.router');
 const biografiasRouter = require('./biografias.router');
-const { checkAdminRole } = require('../middlewares/auth.handler');
+const { checkAdminRole, checkApiKey } = require('../middlewares/auth.handler');
 
 const router = express.Router();
 
 const routersApi = ( app ) => {
-    app.use('/api/v1', router);
+    app.use('/api/v1', checkApiKey(), router);
     router.use('/users', passport.authenticate('jwt', { session: false }), usersRouter);
     router.use('/auth', authRouter);
     router.use('/gaceta', gacetaRouter);
