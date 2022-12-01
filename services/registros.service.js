@@ -56,13 +56,15 @@ class Registro {
         }
     }
 
-    async update( id ) {
+    async update(id) {
         try {
 
             const registro = await this.findOne(id);
+            let count = registro.getDataValue('count');
             const changes = {
-                count: ++registro.dataValues.count,
+                count: ++count,
             }
+
             const data = await registro.update(changes);
 
             return data;
@@ -72,12 +74,12 @@ class Registro {
         }
     }
 
-    async updateByMaterial( id ) {
+    async updateByMaterial(id) {
         try {
-
-            const registro = await this.findOneByMaterial(id);
+            const registro = await this.findOne(id);
+            let count = registro.getDataValue('count');
             const changes = {
-                count: ++registro.dataValues.count,
+                count: ++count,
             }
             const data = await registro.update(changes);
             

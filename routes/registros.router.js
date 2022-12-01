@@ -43,8 +43,8 @@ router.patch('/:id',
 
             const id = req.params.id;
             const registroService = new Registro();
-
-            const data = await registroService.update( id );
+    
+            const data = await registroService.update( id, req.body );
 
             res.json(data);
 

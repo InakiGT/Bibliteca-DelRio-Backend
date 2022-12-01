@@ -1,5 +1,6 @@
 const { models } = require('../libs/sequilize');
 const { QueryTypes } = require('sequelize');
+const Registro = require('./registros.service');
 
 class Material {
     constructor( title, description, autor, languaje, contentUrl, backgroundImg, frontPage ) {
@@ -113,9 +114,13 @@ class Video extends Material {
                 format: this.format,
                 materialType: this.materialType,
             }
-            const newLibro = await models.Material.create(data);
+            const newVideo = await models.Material.create(data);
+            
+            const id = newVideo.getDataValue('id');
+            const registro = new Registro(id);
+            await registro.create();
 
-            return newLibro;
+            return newVideo;
 
         } catch(err) {
             console.log(err);
@@ -164,6 +169,10 @@ class Libro extends Material {
             }
             const newLibro = await models.Material.create(data);
 
+            const id = newLibro.getDataValue('id');
+            const registro = new Registro(id);
+            await registro.create();
+
             return newLibro;
 
         } catch(err) {
@@ -211,9 +220,13 @@ class Revista extends Material {
                 vol: this.vol,
                 materialType: this.materialType,
             }
-            const newLibro = await models.Material.create(data);
+            const newRevista = await models.Material.create(data);
 
-            return newLibro;
+            const id = newRevista.getDataValue('id');
+            const registro = new Registro(id);
+            await registro.create();
+
+            return newRevista;
 
         } catch(err) {
             console.log(err);
@@ -256,9 +269,13 @@ class Biografia extends Material {
                 format: this.format,
                 materialType: this.materialType,
             }
-            const newLibro = await models.Material.create(data);
+            const newBiografia = await models.Material.create(data);
 
-            return newLibro;
+            const id = newBiografia.getDataValue('id');
+            const registro = new Registro(id);
+            await registro.create();
+
+            return newBiografia;
 
         } catch(err) {
             console.log(err);
