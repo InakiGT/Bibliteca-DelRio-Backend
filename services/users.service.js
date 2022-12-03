@@ -68,8 +68,14 @@ class User {
 
     async update( id, changes ) {
         try {
+
+            if(changes.password) {
+                changes.password = await bcrypt.hash( changes.password, 10 );
+            }
             const user = await this.findOne(id);
             const data = await user.update(changes);
+
+            delete data.dataValues.password;
             
             return data;
         } catch(err) {

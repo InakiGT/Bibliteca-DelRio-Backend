@@ -6,7 +6,7 @@ class Checks {
     static checkApiKey() {
         return ( req, _, next ) => {
             const apiKey = req.headers['api'];
-        
+            
             if( apiKey === config.apiKey ) {
                 next();
             } else {
