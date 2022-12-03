@@ -7,11 +7,13 @@ const { createLibroSchema } = require('../schemas/material.schema');
 
 const router = express.Router();
 
-router.get('/', async ( _, res, next ) => {
+router.get('/', async ( req, res, next ) => {
     try {
 
+        const query = req.query.limit || null;
+
         const libroService = new Libro();
-        const data = await libroService.find();
+        const data = await libroService.find(query);
         
         res.json(data);
 

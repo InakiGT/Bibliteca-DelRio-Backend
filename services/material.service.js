@@ -137,12 +137,22 @@ class Libro extends Material {
         this.materialType = 'libro';
     }
 
-    async find() {
+    async find(query) {
         try {
             
             const materialType = 'libro';
+
+            if(!query) {
+                const data = await models.Material.findAll({
+                    where: { materialType },
+                });
+
+                return data;
+            }
+
             const data = await models.Material.findAll({
                 where: { materialType },
+                limit: parseInt(query),
             });
 
             return data;
