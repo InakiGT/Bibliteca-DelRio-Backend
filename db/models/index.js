@@ -12,6 +12,7 @@ const setupModels = ( sequelize ) => {
     Prestamo.init( PrestamoSchema, Prestamo.config(sequelize) );
 
     Prestamo.associate( sequelize.models );
+    Registro.associate( sequelize.models );
 }
 
 module.exports = setupModels;

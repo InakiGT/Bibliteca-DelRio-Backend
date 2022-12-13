@@ -19,6 +19,19 @@ router.get('/', async ( _, res, next ) => {
     }
 });
 
+router.get('/:id', async ( req, res, next ) => {
+    try {
+
+        const { id } = req.params;
+        const gacetaService = new Gaceta();
+        const data = await gacetaService.findOne(id);
+        res.json(data);
+
+    } catch(err) {
+        next(err);
+    }
+});
+
 router.post('/',
     passport.authenticate('jwt', { session: false }),
     checkAdminRole(),

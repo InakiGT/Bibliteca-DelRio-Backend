@@ -29,8 +29,10 @@ class Prestamo {
                 code: this.code,
             }
             
-            const data = await models.Prestamo.create(newPrestamo);
-            return data;
+            await models.Prestamo.create(newPrestamo);
+            const comprobante = new ComprobantePrestamo(this.code, this.materialId);
+            
+            return comprobante.get();
 
         } catch(err) {
             console.log(err);
@@ -43,6 +45,20 @@ class Prestamo {
 
         return {
             id
+        }
+    }
+}
+
+class ComprobantePrestamo {
+    constructor(code, materialId) {
+        this.code = code;
+        this.materialId = materialId;
+    }
+
+    get() {
+        return {
+            code: this.code,
+            materialId: this.materialId,
         }
     }
 }

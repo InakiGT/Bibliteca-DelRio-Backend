@@ -7,7 +7,7 @@ require('./utils/auth');
 
 const app = express();
 
-const whitelist = [ 'http://127.0.0.1:5500' ];
+const whitelist = [ 'http://127.0.0.1:5500', 'https://helpful-sunshine-9b4c2e.netlify.app' ];
 const options = {
     origin: ( origin, callback ) => {
         if( whitelist.includes(origin) || !origin ) {

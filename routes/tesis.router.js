@@ -28,7 +28,7 @@ router.post('/',
         try {
 
             const body = req.body;
-            const tesis = new Tesis( body.title, body.description, body.autor, body.language, body.contentUrl, body.backgroundImg, body.frontPage, body.existence, body.format, body.cedula );
+            const tesis = new Tesis( body.title, body.description, body.autor, body.language, body.contentUrl, body.backgroundImg, body.frontPage, body.format, body.cedula );
             const newTesis = await tesis.create();
 
             res.json(newTesis);

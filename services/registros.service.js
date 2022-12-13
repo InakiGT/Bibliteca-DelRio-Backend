@@ -8,7 +8,9 @@ class Registro {
     async find() {
         try {
 
-            const data = await models.Registro.findAll();
+            const data = await models.Registro.findAll({
+                include: ["material"],
+            });
             return data;
 
         } catch(err) {
@@ -76,7 +78,7 @@ class Registro {
 
     async updateByMaterial(id) {
         try {
-            const registro = await this.findOne(id);
+            const registro = await this.findOneByMaterial(id);
             let count = registro.getDataValue('count');
             const changes = {
                 count: ++count,

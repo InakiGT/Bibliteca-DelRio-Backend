@@ -28,7 +28,7 @@ router.post('/',
         try {
 
             const body = req.body;
-            const revista = new Revista( body.title, body.description, body.autor, body.language, body.contentUrl, body.backgroundImg, body.frontPage, body.existence, body.format, body.editorial, body.vol );
+            const revista = new Revista( body.title, body.description, body.autor, body.language, body.contentUrl, body.backgroundImg, body.frontPage, body.format, body.editorial, body.vol );
             const newRevista = await revista.create();
 
             res.json(newRevista);
