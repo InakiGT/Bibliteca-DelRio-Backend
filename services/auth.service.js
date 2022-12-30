@@ -1,12 +1,12 @@
 const boom = require('@hapi/boom');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('./users.service');
+const GestorUser = require('./users.service');
 const config = require('../config/config');
 
-const userService = new User();
+const userService = new GestorUser();
 
-class Auth {
+class GestorAuth {
     async getUser( email, password ) {
         const user = await userService.findByEmail(email);
         
@@ -39,4 +39,4 @@ class Auth {
     }
 }
 
-module.exports = Auth;
+module.exports = GestorAuth;

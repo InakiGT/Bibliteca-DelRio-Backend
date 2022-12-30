@@ -1,13 +1,7 @@
-const uuid = require('uuid');
+const { ComprobantePrestamo } = require('../models/prestamo.model');
 const { models } = require('../libs/sequilize');
 
-class Prestamo {
-    constructor( userId, materialId ) {
-        this.userId = userId;
-        this.materialId = materialId;
-        this.code = uuid.v1();
-    }
-
+class GestorPrestamo {
     async findOne(id) {
         try {
 
@@ -20,17 +14,17 @@ class Prestamo {
         }
     }
 
-    async create() {
+    async create(prestamo) {
         try {
 
             const newPrestamo = {
-                userId: this.userId,
-                materialId: this.materialId,
-                code: this.code,
+                userId: prestamo.getUserId(),
+                materialId: prestamo.getMaterialId(),
+                code: prestamo.getCode(),
             }
             
             await models.Prestamo.create(newPrestamo);
-            const comprobante = new ComprobantePrestamo(this.code, this.materialId);
+            const comprobante = new ComprobantePrestamo( prestamo.getCode(), prestamo.getMaterialId() );
             
             return comprobante.get();
 
@@ -49,18 +43,4 @@ class Prestamo {
     }
 }
 
-class ComprobantePrestamo {
-    constructor(code, materialId) {
-        this.code = code;
-        this.materialId = materialId;
-    }
-
-    get() {
-        return {
-            code: this.code,
-            materialId: this.materialId,
-        }
-    }
-}
-
-module.exports = Prestamo;
+module.exports = GestorPrestamo;

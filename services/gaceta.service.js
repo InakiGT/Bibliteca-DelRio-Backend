@@ -1,11 +1,6 @@
 const { models } = require('../libs/sequilize');
 
-class Gaceta {
-    constructor( title, imageUrl ) {
-        this.title = title;
-        this.imageUrl = imageUrl;
-    }
-    
+class GestorGaceta {
     async find() {
         try {
             const data = await models.Gaceta.findAll();
@@ -32,12 +27,12 @@ class Gaceta {
     }
 
 
-    async create() {
+    async create(gaceta) {
         try {
 
             const data = {
-                title: this.title,
-                imageUrl: this.imageUrl,
+                title: gaceta.getTitle(),
+                imageUrl: gaceta.getImage(),
             } 
 
             const newGaceta = await models.Gaceta.create(data);
@@ -73,4 +68,4 @@ class Gaceta {
 
 }
 
-module.exports = Gaceta;
+module.exports = GestorGaceta;

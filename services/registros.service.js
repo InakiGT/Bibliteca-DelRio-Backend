@@ -1,10 +1,6 @@
 const { models } = require('../libs/sequilize');
 
-class Registro {
-    constructor(materialId) {
-        this.materialId = materialId;
-    }
-
+class GestorRegistro {
     async find() {
         try {
 
@@ -43,11 +39,11 @@ class Registro {
         }
     }
 
-    async create() {
+    async create(registro) {
         try {
 
             const newRegistro = {
-                materialId: this.materialId
+                materialId: registro.getMaterialId()
             }
             const data = await models.Registro.create(newRegistro);
 
@@ -93,4 +89,4 @@ class Registro {
     }
 }
 
-module.exports = Registro;
+module.exports = GestorRegistro;

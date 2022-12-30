@@ -5,29 +5,35 @@ const routersApi = require('./routes');
 const { Errors } = require('./middlewares/error.handler');
 require('./utils/auth');
 
-const app = express();
+class Main {
+    constructor() {
+        const app = express();
 
-const whitelist = [ 'http://127.0.0.1:5500', 'https://helpful-sunshine-9b4c2e.netlify.app' ];
-const options = {
-    origin: ( origin, callback ) => {
-        if( whitelist.includes(origin) || !origin ) {
-            callback( null, true );
-        } else {
-            callback(new Error('Not allowed'));
+        const whitelist = [ 'http://127.0.0.1:5500', 'https://helpful-sunshine-9b4c2e.netlify.app' ];
+        const options = {
+            origin: ( origin, callback ) => {
+                if( whitelist.includes(origin) || !origin ) {
+                    callback( null, true );
+                } else {
+                    callback(new Error('Not allowed'));
+                }
+            }
         }
+
+        app.use(cors(options));
+        app.use(express.json());
+        app.use('/new_page', ( _, res ) => {
+            res.json({ msg: "Bienvenido a la biblioteca virtual DelRio" })
+        });
+
+        routersApi(app);
+        app.use( Errors.boomErrorHandler() );
+        app.use( Errors.errorHandler() );
+
+        app.listen(config.port, () => {
+            console.log(`Servidor escuchando en el puerto ${ config.port }`);
+        });
     }
 }
 
-app.use(cors(options));
-app.use(express.json());
-app.use('/new_page', ( _, res ) => {
-    res.json({ msg: "Bienvenido a la biblioteca virtual DelRio" })
-});
-
-routersApi(app);
-app.use( Errors.boomErrorHandler() );
-app.use( Errors.errorHandler() );
-
-app.listen(config.port, () => {
-    console.log(`Servidor escuchando en el puerto ${ config.port }`);
-});
+new Main()

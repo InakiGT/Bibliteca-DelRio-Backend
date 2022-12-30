@@ -1,15 +1,16 @@
 const express = require('express');
-const Registro = require('../services/registros.service');
+const GestorRegistro = require('../services/registros.service');
+const Registro = require('../models/registro.model');
 const { validatorHandler } = require('../middlewares/validator.handler');
 const { checkAdminRole } = require('../middlewares/auth.handler');
 const { createRegistroSchema, updateRegistroSchema } = require('../schemas/registro.schema');
 
 const router = express.Router();
+const registroService = new GestorRegistro();
 
 router.get('/', async ( _, res, next ) => {
     try {
         
-        const registroService = new Registro();
         const data = await registroService.find();
 
         res.json(data);
@@ -26,8 +27,8 @@ router.post('/',
         try {
 
             const body = req.body;
-            const registroService = new Registro(body.materialId);
-            const data = await registroService.create();
+            const registro = new Registro(body.materialId);
+            const data = await registroService.create(registro);
             
             res.json(data);
 
@@ -42,8 +43,7 @@ router.patch('/:id',
         try {
 
             const id = req.params.id;
-            const registroService = new Registro();
-    
+
             const data = await registroService.update( id, req.body );
 
             res.json(data);

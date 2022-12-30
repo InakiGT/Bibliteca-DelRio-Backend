@@ -1,20 +1,19 @@
 const express = require('express');
 const passport = require('passport');
-const { Material } = require('../services/material.service');
+const { GestorMaterial } = require('../services/material.service');
 const Registro = require('../services/registros.service');
 const { checkAdminRole } = require('../middlewares/auth.handler');
 const { validatorHandler } = require('../middlewares/validator.handler');
 const { updateMaterialSchema, deleteMaterialSchema, getMaterialSchema } = require('../schemas/material.schema');
 
 const router = express.Router();
+const materialService = new GestorMaterial();
 
 router.get('/', async ( req, res, next ) => {
     try {
 
         const query = req.query.name || null;
-
-        const materialService = new Material();
-        const data = await materialService.find(query);
+        const data = await GestorMaterialService.find(query);
         
         res.json(data);
 
@@ -30,7 +29,6 @@ router.get('/:id',
         try {
             
             const id = req.params.id;
-            const materialService = new Material();
             const registroService = new Registro();
             const data = await materialService.findOne(id);
             await registroService.updateByMaterial(id);
@@ -49,7 +47,6 @@ router.patch('/:id',
     async ( req, res, next ) => {
         try {
 
-            const materialService = new Material();
             const id = req.params.id;
             const changes = req.body;
             
@@ -70,7 +67,6 @@ router.delete('/:id',
         try {
 
             const id = req.params.id;
-            const materialService = new Material();
             const data = await materialService.delete(id);
 
             res.json(data);

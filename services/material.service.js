@@ -2,17 +2,7 @@ const { models } = require('../libs/sequilize');
 const { QueryTypes } = require('sequelize');
 const Registro = require('./registros.service');
 
-class Material {
-    constructor( title, description, autor, languaje, contentUrl, backgroundImg, frontPage ) {
-        this.title = title;
-        this.description = description;
-        this.autor = autor;
-        this.languaje = languaje;
-        this.contentUrl = contentUrl;
-        this.backgroundImg = backgroundImg;
-        this.frontPage = frontPage;
-    }
-
+class GestorMaterial {
     async find(query) {
         try {
 
@@ -79,13 +69,7 @@ class Material {
     }
 }
 
-class Video extends Material {
-    constructor( title, description, autor, languaje, contentUrl, backgroundImg, frontPage, format ) {
-        super( title, description, autor, languaje, contentUrl, backgroundImg, frontPage );
-        this.format = format;
-        this.materialType = 'video';
-    }
-
+class GestorVideo extends GestorMaterial {
     async find() {
         try {
             
@@ -101,18 +85,18 @@ class Video extends Material {
         }
     }
     
-    async create() {
+    async create(video) {
         try {
             const data = {
-                title: this.title,
-                description: this.description,
-                autor: this.autor,
-                languaje: this.languaje,
-                contentUrl: this.contentUrl,
-                backgroundImg: this.backgroundImg,
-                frontPage: this.frontPage,
-                format: this.format,
-                materialType: this.materialType,
+                title: video.getTitle(),
+                description: video.detDescription(),
+                autor: video.getAutor(),
+                languaje: video.getLanguaje(),
+                contentUrl: video.getContent(),
+                backgroundImg: video.getBackground(),
+                frontPage: video.getFrontPage(),
+                format: video.getFormat(),
+                materialType: video.getMaterialType(),
             }
             const newVideo = await models.Material.create(data);
             
@@ -128,15 +112,7 @@ class Video extends Material {
     }
 }
 
-class Libro extends Material {
-    constructor( title, description, autor, languaje, contentUrl, backgroundImg, frontPage, existence, format, editorial ) {
-        super( title, description, autor, languaje, contentUrl, backgroundImg, frontPage );
-        this.existence = existence;
-        this.format = format;
-        this.editorial = editorial;
-        this.materialType = 'libro';
-    }
-
+class GestorLibro extends GestorMaterial {
     async find(query) {
         try {
             
@@ -162,20 +138,20 @@ class Libro extends Material {
         }
     }
     
-    async create() {
+    async create(libro) {
         try {
             const data = {
-                title: this.title,
-                description: this.description,
-                autor: this.autor,
-                languaje: this.languaje,
-                contentUrl: this.contentUrl,
-                backgroundImg: this.backgroundImg,
-                frontPage: this.frontPage,
-                existence: this.existence,
-                format: this.format,
-                editorial: this.editorial,
-                materialType: this.materialType,
+                title: libro.getTitle,
+                description: libro.getDescription,
+                autor: libro.autor,
+                languaje: libro.getLanguaje,
+                contentUrl: libro.getContent,
+                backgroundImg: libro.getBackground,
+                frontPage: libro.getFrontPage,
+                existence: libro.getExistence,
+                format: libro.getFormat,
+                editorial: libro.getEditorial,
+                materialType: libro.getMaterialType,
             }
             const newLibro = await models.Material.create(data);
 
@@ -191,15 +167,7 @@ class Libro extends Material {
     }
 }
 
-class Revista extends Material {
-    constructor( title, description, autor, languaje, contentUrl, backgroundImg, frontPage, format, editorial, vol ) {
-        super( title, description, autor, languaje, contentUrl, backgroundImg, frontPage );
-        this.format = format;
-        this.editorial = editorial;
-        this.vol = vol;
-        this.materialType = 'revista';
-    }
-
+class GestorRevista extends GestorMaterial {
     async find() {
         try {
             
@@ -215,20 +183,20 @@ class Revista extends Material {
         }
     }
     
-    async create() {
+    async create(revista) {
         try {
             const data = {
-                title: this.title,
-                description: this.description,
-                autor: this.autor,
-                languaje: this.languaje,
-                contentUrl: this.contentUrl,
-                backgroundImg: this.backgroundImg,
-                frontPage: this.frontPage,
-                format: this.format,
-                editorial: this.editorial,
-                vol: this.vol,
-                materialType: this.materialType,
+                title: revista.getTitle,
+                description: revista.getDescription,
+                autor: revista.getAutor,
+                languaje: revista.getLanguaje,
+                contentUrl: revista.getContent,
+                backgroundImg: revista.getBackground,
+                frontPage: revista.getFrontPage,
+                format: revista.getFormat,
+                editorial: revista.getEditorial,
+                vol: revista.getVol,
+                materialType: revista.getMaterialType,
             }
             const newRevista = await models.Material.create(data);
 
@@ -244,13 +212,7 @@ class Revista extends Material {
     }
 }
 
-class Biografia extends Material {
-    constructor( title, description, autor, languaje, contentUrl, backgroundImg, frontPage ) {
-        super( title, description, autor, languaje, contentUrl, backgroundImg, frontPage );
-        this.format = 'text';
-        this.materialType = 'biografia';
-    }
-
+class GestorBiografia extends GestorMaterial {
     async find() {
         try {
             
@@ -266,18 +228,18 @@ class Biografia extends Material {
         }
     }
     
-    async create() {
+    async create(biografia) {
         try {
             const data = {
-                title: this.title,
-                description: this.description,
-                autor: this.autor,
-                languaje: this.languaje,
-                contentUrl: this.contentUrl,
-                backgroundImg: this.backgroundImg,
-                frontPage: this.frontPage,
-                format: this.format,
-                materialType: this.materialType,
+                title: biografia.getTitle,
+                description: biografia.getDescription,
+                autor: biografia.getAutor,
+                languaje: biografia.getLanguaje,
+                contentUrl: biografia.getContent,
+                backgroundImg: biografia.getBackground,
+                frontPage: biografia.getFrontPage,
+                format: biografia.getFormat,
+                materialType: biografia.getMaterialType,
             }
             const newBiografia = await models.Material.create(data);
 
@@ -293,14 +255,7 @@ class Biografia extends Material {
     }
 }
 
-class Tesis extends Material {
-    constructor( title, description, autor, languaje, contentUrl, backgroundImg, frontPage, format, cedula ) {
-        super( title, description, autor, languaje, contentUrl, backgroundImg, frontPage );
-        this.format = format;
-        this.cedula = cedula;
-        this.materialType = 'tesis';
-    }
-
+class GestorTesis extends GestorMaterial {
     async find() {
         try {
             
@@ -316,19 +271,19 @@ class Tesis extends Material {
         }
     }
     
-    async create() {
+    async create(tesis) {
         try {
             const data = {
-                title: this.title,
-                description: this.description,
-                autor: this.autor,
-                languaje: this.languaje,
-                contentUrl: this.contentUrl,
-                backgroundImg: this.backgroundImg,
-                frontPage: this.frontPage,
-                format: this.format,
-                cedula: this.cedula,
-                materialType: this.materialType,
+                title: tesis.getTitle,
+                description: tesis.getDescription,
+                autor: tesis.getAutor,
+                languaje: tesis.getLanguaje,
+                contentUrl: tesis.getContent,
+                backgroundImg: tesis.getBackground,
+                frontPage: tesis.getFrontPage,
+                format: tesis.getFormat,
+                cedula: tesis.getCedula,
+                materialType: tesis.getMaterialType,
             }
             const newLibro = await models.Material.create(data);
 
@@ -341,10 +296,10 @@ class Tesis extends Material {
 }
 
 module.exports = {
-    Material,
-    Video,
-    Libro,
-    Revista,
-    Biografia,
-    Tesis,
+    GestorMaterial,
+    GestorVideo,
+    GestorLibro,
+    GestorRevista,
+    GestorBiografia,
+    GestorTesis,
 };

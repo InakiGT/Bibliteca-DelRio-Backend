@@ -1,7 +1,7 @@
 const { Strategy } = require('passport-local');
-const Auth = require('../../../services/auth.service');
+const GestorAuth = require('../../../services/auth.service');
 
-const authService = new Auth();
+const authService = new GestorAuth();
 
 const LocalStrategy = new Strategy({
     usernameField: 'email',

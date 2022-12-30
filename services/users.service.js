@@ -1,14 +1,7 @@
 const bcrypt = require('bcrypt');
 const { models } = require('../libs/sequilize');
 
-class User {
-    constructor( username, email, password, role ) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-    }
-
+class GestorUser {
     async find() {
         try {
             const data = await models.User.findAll();
@@ -47,14 +40,14 @@ class User {
         }
     }
     
-    async create() {
+    async create(user) {
         try {
-            const hash = await bcrypt.hash( this.password, 10 );
+            const hash = await bcrypt.hash( user.getPassword(), 10 );
             const data = {
-                username: this.username,
-                email: this.email,
+                username: user.getUsername(),
+                email: user.getEmail(),
                 password: hash,
-                role: this.role,
+                role: user.getRole(),
             }
             
             const newUser = await models.User.create(data);
@@ -96,4 +89,4 @@ class User {
     }
 }
 
-module.exports = User;
+module.exports = GestorUser;

@@ -1,17 +1,18 @@
 const express = require('express');
-const Prestamo = require('../services/prestamos.service');
+const GestorPrestamo = require('../services/prestamos.service');
+const { Prestamo } = require('../models/prestamo.model');
 const { validatorHandler } = require('../middlewares/validator.handler');
 const { checkPermission } = require('../middlewares/auth.handler');
 const { getPrestamoSchema, deletePrestamoSchema, createPrestamoSchema } = require('../schemas/prestamo.schema');
 
 const router = express.Router();
+const prestamoService = new GestorPrestamo();
 
 router.get('/:id', 
     validatorHandler( getPrestamoSchema, 'params' ),
     async ( req, res, next ) => {
         try {
             const id = req.params.id;
-            const prestamoService = new Prestamo();
             const data = await prestamoService.findOne(id);
 
             res.json(data);
@@ -28,8 +29,8 @@ router.post('/',
             
             const userId = req.user.sub;
             const body = req.body;
-            const prestamoService = new Prestamo( userId, body.materialId );
-            const data = await prestamoService.create();
+            const prestamo = new Prestamo( userId, body.materialId );
+            const data = await prestamoService.create(prestamo);
 
             res.json(data);
 
@@ -45,7 +46,6 @@ router.delete('/:id',
         try {
             
             const id = req.params.id;
-            const prestamoService = new Prestamo();
             const data = await prestamoService.delete(id);
 
             res.json(data);

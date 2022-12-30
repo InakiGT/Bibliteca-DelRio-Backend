@@ -1,16 +1,17 @@
 const express = require('express');
 const passport = require('passport');
-const Gaceta = require('../services/gaceta.service');
+const GestorGaceta = require('../services/gaceta.service');
+const Gaceta = require('../models/gaceta.model');
 const { validatorHandler } = require('../middlewares/validator.handler');
 const { checkAdminRole } = require('../middlewares/auth.handler');
 const { createGacetaSchema, updateGacetaSchema, deleteGacetaSchema } = require('../schemas/gaceta.schema');
 
 const router = express.Router();
+const gacetaService = new GestorGaceta();
 
 router.get('/', async ( _, res, next ) => {
     try {
 
-        const gacetaService = new Gaceta();
         const data = await gacetaService.find();
         res.json(data);
 
@@ -23,7 +24,6 @@ router.get('/:id', async ( req, res, next ) => {
     try {
 
         const { id } = req.params;
-        const gacetaService = new Gaceta();
         const data = await gacetaService.findOne(id);
         res.json(data);
 
@@ -40,8 +40,8 @@ router.post('/',
         try {
 
             const body = req.body;
-            const gacetaService = new Gaceta( body.title, body.imageUrl );
-            const newGaceta = await gacetaService.create();
+            const gaceta = new Gaceta(body.title, body.imageUrl);
+            const newGaceta = await gacetaService.create(gaceta);
 
             res.json(newGaceta);
 
@@ -59,7 +59,7 @@ router.patch('/:id',
 
             const { id } = req.params;
             const changes = req.body;
-            const gacetaService = new Gaceta();
+
             const gaceta = await gacetaService.update( id, changes );
 
             res.json(gaceta);
@@ -78,7 +78,6 @@ router.delete('/:id',
         try {
 
         const { id } = req.params;
-        const gacetaService = new Gaceta();
         const data = await gacetaService.delete(id);
 
         res.json(data);

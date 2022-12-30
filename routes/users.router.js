@@ -1,18 +1,18 @@
 const express = require('express');
-const User = require('../services/users.service');
+const GestorUser = require('../services/users.service');
+const User = require('../models/user.model');
 const { validatorHandler } = require('../middlewares/validator.handler');
 const { getUserSchema, createUserSchema, updateUserSchema, deleteUserSchema } = require('../schemas/user.schema');
 const { checkAdminRole, checkPermission } = require('../middlewares/auth.handler');
 
+const userService = new GestorUser();
 const router = express.Router();
-
 
 router.get('/', 
     checkAdminRole(),
     async (  _, res, next ) => {
         try {
 
-            const userService = new User();
             const data = await userService.find();
             
             res.json(data);
@@ -27,7 +27,6 @@ router.get('/:id',
     async ( req, res, next ) => {
         try {
 
-            const userService = new User();
             const id = req.params.id;
             const data = await userService.findOne(id);
 
@@ -45,8 +44,8 @@ router.post('/',
         try {
 
             const body = req.body;
-            const userService = new User(body.username, body.email, body.password, body.role);
-            const newUser = await userService.create();
+            const user = new User(body.username, body.email, body.password, body.role);
+            const newUser = await userService.create(user);
 
             res.json(newUser);
 
@@ -61,7 +60,6 @@ router.patch('/:id',
     async ( req, res, next ) => {
         try {
 
-            const userService = new User();
             const id = req.params.id;
             const changes = req.body;
 
@@ -80,7 +78,6 @@ router.delete('/:id',
     async ( req, res, next ) => {
         try {
 
-            const userService = new User();
             const id = req.params.id;
 
             const data = await userService.delete(id);
